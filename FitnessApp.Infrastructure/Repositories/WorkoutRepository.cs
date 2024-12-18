@@ -1,4 +1,5 @@
-﻿using FitnessApp.Domain.Interfaces;
+﻿using FitnessApp.Domain.Exceptions;
+using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +25,14 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<Workout?> GetByIdAsync(int workoutId)
         {
-            return await _context.Workouts
+            var workout = await _context.Workouts
                 .Include(w => w.ExerciseType)
                 .FirstOrDefaultAsync(w => w.Id == workoutId);
+            if (workout == null)
+            {
+                throw new ResourceNotFoundException("Workout with that id does not exist!");
+            }
+            return workout;
         }
 
         public async Task<List<Workout>> GetByDateRangeAsync(int userId, DateTime startDate, DateTime endDate)
@@ -39,6 +45,14 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<Workout?> AddAsync(Workout workout)
         {
+            if (workout?.UserId == null) 
+            {
+                throw new EmptyFieldException("User id field can not be empty!");
+            }
+            if (workout?.ExerciseTypeId == null)
+            {
+                throw new EmptyFieldException("Exercise type id field can not be empty!");
+            }
             _context.Workouts.Add(workout);
             await _context.SaveChangesAsync();
             return workout;
@@ -46,10 +60,22 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<Workout?> UpdateAsync(Workout workout)
         {
+            if (workout?.UserId == null)
+            {
+                throw new EmptyFieldException("User id field can not be empty!");
+            }
+            if (workout?.ExerciseTypeId == null)
+            {
+                throw new EmptyFieldException("Exercise type id field can not be empty!");
+            }
+            if (workout?.Id == null)
+            {
+                throw new EmptyFieldException("Id field can not be empty!");
+            }
             var existingWorkout = await _context.Workouts.FirstOrDefaultAsync(w => w.Id == workout.Id);
             if (existingWorkout == null)
             {
-                return null; 
+                throw new ResourceNotFoundException("Workout with that id does not exist!");
             }
             existingWorkout.Duration = workout.Duration;
             existingWorkout.CaloriesBurned = workout.CaloriesBurned;
@@ -63,11 +89,12 @@ namespace FitnessApp.Infrastructure.Repositories
         public async Task DeleteAsync(int workoutId)
         {
             var workout = await _context.Workouts.FindAsync(workoutId);
-            if (workout != null)
+            if (workout == null)
             {
-                _context.Workouts.Remove(workout);
-                await _context.SaveChangesAsync();
+                throw new ResourceNotFoundException("Workout with that id does not exist!");
             }
+            _context.Workouts.Remove(workout);
+            await _context.SaveChangesAsync();
         }
     }
 }
