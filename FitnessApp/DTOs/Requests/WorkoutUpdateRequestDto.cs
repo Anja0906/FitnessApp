@@ -1,6 +1,8 @@
-﻿namespace FitnessApp.WebApi.DTOs.Responses
+﻿using FitnessApp.WebApi.DTOs.Responses;
+
+namespace FitnessApp.WebApi.DTOs.Requests
 {
-    public class WorkoutResponseDto
+    public class WorkoutUpdateRequestDto
     {
         public int Id { get; set; }
         public int UserId { get; set; }
@@ -10,7 +12,5 @@
         public int Intensity { get; set; }
         public int FatigueLevel { get; set; }
         public string? Notes { get; set; }
-        public DateTime DateTime { get; set; }
-        public ExerciseTypeResponseDto ExerciseType { get; set; }
     }
 }

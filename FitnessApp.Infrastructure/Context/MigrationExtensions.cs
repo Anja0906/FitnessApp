@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 
-namespace FitnessApp.Infrastructure
+namespace FitnessApp.Infrastructure.Context
 {
     public static class MigrationExtensions
     {

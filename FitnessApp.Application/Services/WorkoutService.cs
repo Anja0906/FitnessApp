@@ -16,9 +16,23 @@ namespace FitnessApp.Application.Services
             return await _workoutRepository.AddAsync(workout);
         }
 
-        public async Task DeleteWorkoutAsync(int workoutId)
+        public async Task DeleteWorkoutAsync(int workoutId, int loggedInUserId)
         {
-            await _workoutRepository.DeleteAsync(workoutId);
+            var usersWorkouts = await _workoutRepository.GetByUserIdAsync(loggedInUserId);
+            bool workoutExists = false;
+            foreach (var workout in usersWorkouts) { 
+                if (workout.Id == workoutId)
+                {
+                    workoutExists = true;
+                }
+            }
+            if (workoutExists == false) {
+                throw new Exception("Workout does not exist!");
+            }
+            else
+            {
+                await _workoutRepository.DeleteAsync(workoutId);
+            }
         }
 
         public async Task<List<Workout>> GetWorkoutByDateRangeAsync(int userId, DateTime startDate, DateTime endDate)

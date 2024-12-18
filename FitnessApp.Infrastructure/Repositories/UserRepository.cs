@@ -1,5 +1,6 @@
 ﻿using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
+using FitnessApp.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Infrastructure.Repositories
@@ -44,9 +45,19 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<User?> UpdateAsync(User user)
         {
-            _context.Users.Update(user);
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (existingUser == null)
+            {
+                return null;
+            }
+            existingUser.Username = user.Username;
+            existingUser.FirstName = user.FirstName;
+            existingUser.HashedPassword = user.HashedPassword;
+            existingUser.LastName = user.LastName;
+            existingUser.Email = user.Email;
+
             await _context.SaveChangesAsync();
-            return user;
+            return existingUser;
         }
 
         public async Task<List<User>> GetAllAsync()
