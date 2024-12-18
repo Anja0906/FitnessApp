@@ -9,6 +9,8 @@ services:
       dockerfile: ./FitnessApp/Dockerfile
     ports:
       - "32768:8080"
+    depends_on:
+      - postgres
     environment:
       ASPNETCORE_URLS: "http://+:8080"
       ASPNETCORE_ENVIRONMENT: "Development"
