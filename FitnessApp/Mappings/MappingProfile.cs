@@ -11,12 +11,15 @@ namespace FitnessApp.WebApi.Mappings
         {
             CreateMap<User, UserResponseDto>().ReverseMap();
             CreateMap<UserRequestDto, User>().ReverseMap();
+            CreateMap<UserUpdateRequestDto, User>().ReverseMap();
 
             CreateMap<Workout, WorkoutResponseDto>().ReverseMap();
             CreateMap<WorkoutRequestDto, Workout>().ReverseMap();
+            CreateMap<WorkoutUpdateRequestDto, Workout>().ReverseMap();
 
             CreateMap<ExerciseType, ExerciseTypeResponseDto>().ReverseMap();
             CreateMap<ExerciseTypeRequestDto, ExerciseType>().ReverseMap();
+            CreateMap<ExerciseTypeUpdateRequestDto, ExerciseType>().ReverseMap();
         }
     }
 }

@@ -3,10 +3,12 @@ using FitnessApp.Application.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.WebApi.DTOs.Requests;
 using FitnessApp.WebApi.DTOs.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ExerciseTypeController : ControllerBase
@@ -47,7 +49,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateExerciseType(int id, [FromBody] ExerciseTypeRequestDto exerciseTypeDto)
+        public async Task<IActionResult> UpdateExerciseType(int id, [FromBody] ExerciseTypeUpdateRequestDto exerciseTypeDto)
         {
             var request = _mapper.Map<ExerciseType>(exerciseTypeDto);
             var updatedExerciseType = await _exerciseTypeService.UpdateExerciseTypeAsync(request);

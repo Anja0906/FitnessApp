@@ -1,5 +1,6 @@
 ﻿using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
+using FitnessApp.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace FitnessApp.Infrastructure.Repositories
@@ -45,9 +46,18 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<Workout?> UpdateAsync(Workout workout)
         {
-            _context.Workouts.Update(workout);
+            var existingWorkout = await _context.Workouts.FirstOrDefaultAsync(w => w.Id == workout.Id);
+            if (existingWorkout == null)
+            {
+                return null; 
+            }
+            existingWorkout.Duration = workout.Duration;
+            existingWorkout.CaloriesBurned = workout.CaloriesBurned;
+            existingWorkout.Intensity = workout.Intensity;
+            existingWorkout.FatigueLevel = workout.FatigueLevel;
+            existingWorkout.Notes = workout.Notes;
             await _context.SaveChangesAsync();
-            return workout;
+            return existingWorkout;
         }
 
         public async Task DeleteAsync(int workoutId)

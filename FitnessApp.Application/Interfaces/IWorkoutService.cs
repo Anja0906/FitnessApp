@@ -8,6 +8,6 @@ namespace FitnessApp.Application.Interfaces
         Task<List<Workout>> GetWorkoutByDateRangeAsync(int userId, DateTime startDate, DateTime endDate);
         Task<Workout?> AddWorkoutAsync(Workout workout);
         Task<Workout?> UpdateWorkoutAsync(Workout workout);
-        Task DeleteWorkoutAsync(int workoutId);
+        Task DeleteWorkoutAsync(int workoutId, int loggedInUserId);
     }
 }

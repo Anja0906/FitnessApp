@@ -44,11 +44,13 @@ namespace FitnessApp.Application.Services
 
         public async Task<User?> UpdateUserAsync(User user)
         {
+            user.HashedPassword = BCrypt.Net.BCrypt.HashPassword(user.HashedPassword);
             return await _userRepository.UpdateAsync(user);
         }
 
         public async Task<User?> AddUserAsync(User user)
         {
+            user.HashedPassword = BCrypt.Net.BCrypt.HashPassword(user.HashedPassword);
             return await _userRepository.AddAsync(user);
         }
 
