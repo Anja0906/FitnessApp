@@ -6,8 +6,8 @@ namespace FitnessApp.Domain.Interfaces
     {
         Task<List<ExerciseType>> GetAllAsync();
         Task<ExerciseType?> GetByIdAsync(int id);
-        Task AddAsync(ExerciseType exerciseType);
-        Task UpdateAsync(ExerciseType exerciseType);
+        Task<ExerciseType?> AddAsync(ExerciseType exerciseType);
+        Task<ExerciseType?> UpdateAsync(ExerciseType exerciseType);
         Task DeleteAsync(int id);
     }
 }

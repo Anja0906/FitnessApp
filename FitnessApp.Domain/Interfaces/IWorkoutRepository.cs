@@ -5,9 +5,10 @@ namespace FitnessApp.Domain.Interfaces
     public interface IWorkoutRepository
     {
         Task<List<Workout>> GetByUserIdAsync(int userId);
+        Task<Workout?> GetByIdAsync(int userId);
         Task<List<Workout>> GetByDateRangeAsync(int userId, DateTime startDate, DateTime endDate);
-        Task AddAsync(Workout workout);
-        Task UpdateAsync(Workout workout);
+        Task<Workout?> AddAsync(Workout workout);
+        Task<Workout?> UpdateAsync(Workout workout);
         Task DeleteAsync(int workoutId);
     }
 }
