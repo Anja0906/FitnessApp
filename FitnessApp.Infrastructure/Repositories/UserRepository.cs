@@ -1,4 +1,5 @@
-﻿using FitnessApp.Domain.Interfaces;
+﻿using FitnessApp.Domain.Exceptions;
+using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -16,19 +17,34 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<User?> GetByIdAsync(int id)
         {
-            return await _context.Users
+            var user = await _context.Users
                 .Include(u => u.Workouts)
                 .FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null) 
+            {
+                throw new ResourceNotFoundException("User with that id does not exist!");
+            }
+            return user;
         }
 
         public async Task<User?> GetByUsernameAsync(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                throw new ResourceNotFoundException("User with that username does not exist!");
+            }
+            return user;
         }
 
         public async Task<User?> GetByEmailAsync(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                throw new ResourceNotFoundException("User with that email does not exist!");
+            }
+            return user;
         }
 
         public async Task<bool> ExistsByEmailAsync(string email)
@@ -38,6 +54,11 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<User?> AddAsync(User user)
         {
+            bool existWithEmail = await ExistsByEmailAsync(user.Email);
+            if (existWithEmail) 
+            {
+                throw new UserExistsException($"User with email: {user.Email} already exists!");
+            }
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return user;
@@ -48,7 +69,7 @@ namespace FitnessApp.Infrastructure.Repositories
             var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (existingUser == null)
             {
-                return null;
+                throw new ResourceNotFoundException("User with that id does not exist!");
             }
             existingUser.Username = user.Username;
             existingUser.FirstName = user.FirstName;

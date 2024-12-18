@@ -1,4 +1,5 @@
 ﻿using FitnessApp.Application.Interfaces;
+using FitnessApp.Domain.Exceptions;
 using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
 
@@ -36,7 +37,7 @@ namespace FitnessApp.Application.Services
             var user = await _userRepository.GetByUsernameAsync(username);
             if (user == null || !VerifyPassword(password, user.HashedPassword))
             {
-                return null; // Invalid username or password
+                throw new WrongCredentialsException("Wrong email or password!");
             }
 
             return user;

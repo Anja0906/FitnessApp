@@ -1,4 +1,5 @@
-﻿using FitnessApp.Domain.Interfaces;
+﻿using FitnessApp.Domain.Exceptions;
+using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,12 @@ namespace FitnessApp.Infrastructure.Repositories
 
         public async Task<ExerciseType?> GetByIdAsync(int id)
         {
-            return await _context.ExerciseTypes.FirstOrDefaultAsync(e => e.Id == id);
+            var exerciseType = await _context.ExerciseTypes.FirstOrDefaultAsync(e => e.Id == id);
+            if (exerciseType == null)
+            {
+                throw new ResourceNotFoundException("Exercise type with that id does not exist!");
+            }
+            return exerciseType;
         }
 
         public async Task<ExerciseType?> AddAsync(ExerciseType exerciseType)
@@ -36,7 +42,7 @@ namespace FitnessApp.Infrastructure.Repositories
             var existingExerciseType = await _context.ExerciseTypes.FirstOrDefaultAsync(e => e.Id == exerciseType.Id);
             if (existingExerciseType == null)
             {
-                return null; 
+                throw new ResourceNotFoundException("Exercise type with that id does not exist!");
             }
             existingExerciseType.Name = exerciseType.Name;
             existingExerciseType.Description = exerciseType.Description;
@@ -47,11 +53,12 @@ namespace FitnessApp.Infrastructure.Repositories
         public async Task DeleteAsync(int id)
         {
             var exerciseType = await _context.ExerciseTypes.FindAsync(id);
-            if (exerciseType != null)
+            if (exerciseType == null)
             {
-                _context.ExerciseTypes.Remove(exerciseType);
-                await _context.SaveChangesAsync();
+                throw new ResourceNotFoundException("Exercise type with that id does not exist!");
             }
+            _context.ExerciseTypes.Remove(exerciseType);
+            await _context.SaveChangesAsync();
         }
     }
 }

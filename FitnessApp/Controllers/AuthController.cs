@@ -1,5 +1,6 @@
 ﻿using FitnessApp.Application.Interfaces;
 using FitnessApp.WebApi.DTOs.Requests;
+using FitnessApp.WebApi.DTOs.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.WebApi.Controllers
@@ -24,7 +25,7 @@ namespace FitnessApp.WebApi.Controllers
             if (user == null) return Unauthorized("Invalid credentials");
 
             var token = _tokenService.GenerateToken(user.Username, user.Id);
-            return Ok(new { Token = token });
+            return Ok(new LoginResponseDto{ Token = token });
         }
     }
 }
