@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace FitnessApp.Infrastructure.Context
 {
@@ -14,7 +15,7 @@ namespace FitnessApp.Infrastructure.Context
                 scope.ServiceProvider.GetRequiredService<FitnessAppContext>();
 
             dbContext.Database.Migrate();
-            //dbContext.SeedData(dbContext);
+            DbInitializer.Seed(dbContext);
         }
     }
 }
