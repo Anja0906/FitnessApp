@@ -18,8 +18,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IExerciseTypeService, ExerciseTypeService>();
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 
+builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -36,5 +39,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.ApplyMigrations();
 
 app.Run();
