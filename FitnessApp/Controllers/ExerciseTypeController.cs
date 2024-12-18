@@ -3,13 +3,14 @@ using FitnessApp.Application.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.WebApi.DTOs.Requests;
 using FitnessApp.WebApi.DTOs.Responses;
+using FitnessApp.WebApi.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.WebApi.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route(ExerciseTypeRoutes.Base)]
     [ApiController]
     public class ExerciseTypeController : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace FitnessApp.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet(ExerciseTypeRoutes.GetAll)]
         public async Task<IActionResult> GetAllExerciseTypes()
         {
             var exerciseTypes = await _exerciseTypeService.GetAllExerciseTypesAsync();
@@ -30,7 +31,7 @@ namespace FitnessApp.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet(ExerciseTypeRoutes.GetById)]
         public async Task<IActionResult> GetExerciseType(int id)
         {
             var exerciseType = await _exerciseTypeService.GetExerciseTypeByIdAsync(id);
@@ -39,7 +40,7 @@ namespace FitnessApp.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPost(ExerciseTypeRoutes.Add)]
         public async Task<IActionResult> AddExerciseType([FromBody] ExerciseTypeRequestDto exerciseTypeDto)
         {
             var request = _mapper.Map<ExerciseType>(exerciseTypeDto);
@@ -48,7 +49,7 @@ namespace FitnessApp.WebApi.Controllers
             return CreatedAtAction(nameof(GetExerciseType), new { id = response?.Id }, response);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut(ExerciseTypeRoutes.Update)]
         public async Task<IActionResult> UpdateExerciseType(int id, [FromBody] ExerciseTypeUpdateRequestDto exerciseTypeDto)
         {
             var request = _mapper.Map<ExerciseType>(exerciseTypeDto);
@@ -58,7 +59,7 @@ namespace FitnessApp.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete(ExerciseTypeRoutes.Delete)]
         public async Task<IActionResult> DeleteExerciseType(int id)
         {
             await _exerciseTypeService.DeleteExerciseTypeAsync(id);

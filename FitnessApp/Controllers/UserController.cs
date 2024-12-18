@@ -3,12 +3,13 @@ using FitnessApp.Application.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.WebApi.DTOs.Requests;
 using FitnessApp.WebApi.DTOs.Responses;
+using FitnessApp.WebApi.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(UserRoutes.Base)]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -19,8 +20,9 @@ namespace FitnessApp.WebApi.Controllers
             _userService = userService;
             _mapper = mapper;
         }
+
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet(UserRoutes.GetUser)]
         public async Task<IActionResult> GetUser(int id)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
@@ -34,7 +36,7 @@ namespace FitnessApp.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpGet(UserRoutes.GetAllUsers)]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userService.GetAllUsersAsync();
@@ -42,7 +44,8 @@ namespace FitnessApp.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost("register")]
+        [AllowAnonymous]
+        [HttpPost(UserRoutes.RegisterUser)]
         public async Task<IActionResult> RegisterUser([FromBody] UserRequestDto userRequestDto)
         {
             var user = _mapper.Map<User>(userRequestDto);
@@ -52,7 +55,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut(UserRoutes.UpdateUser)]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateRequestDto userRequestDto)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
