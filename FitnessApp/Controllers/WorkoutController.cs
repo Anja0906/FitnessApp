@@ -3,12 +3,13 @@ using FitnessApp.Application.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.WebApi.DTOs.Requests;
 using FitnessApp.WebApi.DTOs.Responses;
+using FitnessApp.WebApi.Routes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(WorkoutRoutes.Base)]
     [ApiController]
     public class WorkoutController : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpGet("user/{userId}")]
+        [HttpGet(WorkoutRoutes.GetWorkoutsByUser)]
         public async Task<IActionResult> GetWorkoutsByUser(int userId)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
@@ -37,7 +38,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpGet("user/{userId}/date-range")]
+        [HttpGet(WorkoutRoutes.GetWorkoutsByDateRange)]
         public async Task<IActionResult> GetWorkoutsByDateRange(int userId, DateTime startDate, DateTime endDate)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
@@ -51,7 +52,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost(WorkoutRoutes.AddWorkout)]
         public async Task<IActionResult> AddWorkout([FromBody] WorkoutRequestDto workoutRequestDto)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
@@ -66,7 +67,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
+        [HttpPut(WorkoutRoutes.UpdateWorkout)]
         public async Task<IActionResult> UpdateWorkout(int id, [FromBody] WorkoutUpdateRequestDto workoutRequestDto)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
@@ -83,7 +84,7 @@ namespace FitnessApp.WebApi.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete(WorkoutRoutes.DeleteWorkout)]
         public async Task<IActionResult> DeleteWorkout(int id)
         {
             var loggedInUserId = HttpContext.Items["UserId"] as string;
