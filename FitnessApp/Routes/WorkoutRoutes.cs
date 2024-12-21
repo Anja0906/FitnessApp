@@ -8,5 +8,6 @@
         public const string AddWorkout = "";
         public const string UpdateWorkout = "{id}";
         public const string DeleteWorkout = "{id}";
+        public const string GetMonthlyProgress = "user/{userId}/progress";
     }
 }

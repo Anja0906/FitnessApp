@@ -1,6 +1,8 @@
 ﻿using FitnessApp.Application.Interfaces;
 using FitnessApp.WebApi.DTOs.Requests;
 using FitnessApp.WebApi.DTOs.Responses;
+using FitnessApp.WebApi.Routes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessApp.WebApi.Controllers
@@ -18,7 +20,8 @@ namespace FitnessApp.WebApi.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpPost("login")]
+        [AllowAnonymous]
+        [HttpPost(AuthRoutes.Login)]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
             var user = await _userService.LoginUserAsync(loginRequest.Username, loginRequest.Password);

@@ -35,6 +35,11 @@ namespace FitnessApp.Application.Services
             }
         }
 
+        public async Task<List<WeeklyProgress>> GetMonthlyProgressAsync(int userId, int year, int month)
+        {
+            return await _workoutRepository.GetMonthlyProgressAsync(userId, year, month);
+        }
+
         public async Task<List<Workout>> GetWorkoutByDateRangeAsync(int userId, DateTime startDate, DateTime endDate)
         {
             return await _workoutRepository.GetByDateRangeAsync(userId, startDate, endDate);
