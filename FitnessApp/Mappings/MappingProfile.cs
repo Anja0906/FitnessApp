@@ -16,6 +16,7 @@ namespace FitnessApp.WebApi.Mappings
             CreateMap<Workout, WorkoutResponseDto>().ReverseMap();
             CreateMap<WorkoutRequestDto, Workout>().ReverseMap();
             CreateMap<WorkoutUpdateRequestDto, Workout>().ReverseMap();
+            CreateMap<WeeklyProgress, WeeklyProgressResponseDto>().ReverseMap();
 
             CreateMap<ExerciseType, ExerciseTypeResponseDto>().ReverseMap();
             CreateMap<ExerciseTypeRequestDto, ExerciseType>().ReverseMap();

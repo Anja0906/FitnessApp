@@ -9,5 +9,7 @@ namespace FitnessApp.Application.Interfaces
         Task<Workout?> AddWorkoutAsync(Workout workout);
         Task<Workout?> UpdateWorkoutAsync(Workout workout);
         Task DeleteWorkoutAsync(int workoutId, int loggedInUserId);
+
+        Task<List<WeeklyProgress>> GetMonthlyProgressAsync(int userId, int year, int month);
     }
 }

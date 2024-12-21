@@ -3,6 +3,7 @@ using FitnessApp.Domain.Interfaces;
 using FitnessApp.Domain.Model;
 using FitnessApp.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace FitnessApp.Infrastructure.Repositories
 {
@@ -96,5 +97,77 @@ namespace FitnessApp.Infrastructure.Repositories
             _context.Workouts.Remove(workout);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<WeeklyProgress>> GetMonthlyProgressAsync(int userId, int year, int month)
+        {
+            var workouts = await GetWorkoutsForMonth(userId, year, month);
+            var groupedWorkouts = GroupWorkoutsByWeek(workouts);
+            var allWeeksInMonth = GetAllWeeksInMonth(year, month);
+
+            return CreateWeeklyProgress(allWeeksInMonth, groupedWorkouts);
+        }
+
+        private async Task<List<Workout>> GetWorkoutsForMonth(int userId, int year, int month)
+        {
+            return await _context.Workouts
+                .Where(w => w.UserId == userId &&
+                            w.DateTime.Year == year &&
+                            w.DateTime.Month == month)
+                .ToListAsync();
+        }
+
+        private Dictionary<int, WeeklyProgress> GroupWorkoutsByWeek(List<Workout> workouts)
+        {
+            return workouts
+                .GroupBy(w => CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
+                    w.DateTime,
+                    CalendarWeekRule.FirstFourDayWeek,
+                    DayOfWeek.Monday))
+                .ToDictionary(
+                    g => g.Key,
+                    g => new WeeklyProgress
+                    {
+                        Week = g.Key,
+                        TotalDuration = g.Sum(w => w.Duration),
+                        WorkoutCount = g.Count(),
+                        AverageIntensity = g.Average(w => w.Intensity),
+                        AverageFatigueLevel = g.Average(w => w.FatigueLevel)
+                    });
+        }
+
+        private IEnumerable<int> GetAllWeeksInMonth(int year, int month)
+        {
+            var firstDayOfMonth = new DateTime(year, month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            return Enumerable
+                .Range(0, (lastDayOfMonth - firstDayOfMonth).Days + 1)
+                .Select(d => firstDayOfMonth.AddDays(d))
+                .Select(date => CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(
+                    date,
+                    CalendarWeekRule.FirstFourDayWeek,
+                    DayOfWeek.Monday))
+                .Distinct();
+        }
+
+        private List<WeeklyProgress> CreateWeeklyProgress(IEnumerable<int> allWeeks, Dictionary<int, WeeklyProgress> groupedWorkouts)
+        {
+            return allWeeks
+                .Select(week => groupedWorkouts.ContainsKey(week)
+                    ? groupedWorkouts[week]
+                    : new WeeklyProgress
+                    {
+                        Week = week,
+                        TotalDuration = 0,
+                        WorkoutCount = 0,
+                        AverageIntensity = 0,
+                        AverageFatigueLevel = 0
+                    })
+                .OrderBy(p => p.Week)
+                .ToList();
+        }
+
+
+
     }
 }

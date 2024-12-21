@@ -31,6 +31,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontendApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IExerciseTypeRepository, ExerciseTypeRepository>();
 builder.Services.AddScoped<IWorkoutRepository, WorkoutRepository>();
@@ -61,6 +71,8 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<TokenUserMiddleware>();
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
+app.UseCors("AllowFrontendApp");
 
 app.UseAuthentication();
 app.UseAuthorization();

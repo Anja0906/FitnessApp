@@ -91,5 +91,22 @@ namespace FitnessApp.WebApi.Controllers
             await _workoutService.DeleteWorkoutAsync(id, Int32.Parse(loggedInUserId!));
             return NoContent();
         }
+
+        [Authorize]
+        [HttpGet(WorkoutRoutes.GetMonthlyProgress)]
+        public async Task<IActionResult> GetMonthlyProgress(int userId, int year, int month)
+        {
+            var loggedInUserId = HttpContext.Items["UserId"] as string;
+            if (loggedInUserId == null || loggedInUserId != userId.ToString())
+            {
+                return Forbid();
+            }
+
+            var progress = await _workoutService.GetMonthlyProgressAsync(userId, year, month);
+            var progressResponse = _mapper.Map<List<WeeklyProgressResponseDto>>(progress);
+
+            return Ok(progressResponse);
+        }
+
     }
 }
