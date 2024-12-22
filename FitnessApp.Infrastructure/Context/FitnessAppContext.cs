@@ -18,6 +18,7 @@ namespace FitnessApp.Infrastructure.Context
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(u => u.Id);
+                entity.Property(w => w.Id).ValueGeneratedOnAdd();
                 entity.HasIndex(u => u.Email).IsUnique();
                 entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
                 entity.Property(u => u.HashedPassword).IsRequired();
@@ -30,6 +31,7 @@ namespace FitnessApp.Infrastructure.Context
             modelBuilder.Entity<Workout>(entity =>
             {
                 entity.HasKey(w => w.Id);
+                entity.Property(w => w.Id).ValueGeneratedOnAdd();
                 entity.Property(w => w.Duration).IsRequired();
                 entity.Property(w => w.DateTime).IsRequired();
                 entity.HasOne(w => w.ExerciseType)
@@ -41,6 +43,7 @@ namespace FitnessApp.Infrastructure.Context
             modelBuilder.Entity<ExerciseType>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(w => w.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Description).HasMaxLength(250);
             });
