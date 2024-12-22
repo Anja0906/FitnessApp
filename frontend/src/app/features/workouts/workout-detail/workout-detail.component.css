@@ -1,0 +1,38 @@
+.workout-detail {
+  margin-top: 20px;
+  background-color: #424769; 
+  color: #ffffff; 
+  padding: 20px;
+  height: 70vh;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+  font-family: 'Raleway', sans-serif;
+}
+
+.workout-detail h2 {
+  color: #f9b17a; 
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+.workout-info p {
+  margin: 8px 0;
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+
+.workout-info p strong {
+  color: #f9b17a; 
+}
+
+.workout-notes p {
+  margin-top: 15px;
+  font-style: italic;
+  color: #d9d9d9; 
+}
+
+.workout-detail:hover {
+  transform: translateY(-5px);
+  transition: all 0.3s ease-in-out;
+}
+

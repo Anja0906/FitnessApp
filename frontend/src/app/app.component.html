@@ -1,0 +1,38 @@
+@if (isLoggedIn) {
+  <mat-drawer-container class="example-container">
+    <mat-drawer mode="side" class="custom-drawer" opened>
+      <div class="logo-container">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+      </div>
+      <mat-nav-list>
+        <a mat-list-item [class.active]="isActiveRoute('/home')" (click)="redirectsTo('/home')" class="nav-item">
+          <mat-icon class="nav-icon">home</mat-icon>
+          <span class="nav-text">Home</span>
+        </a>
+        <a mat-list-item [class.active]="isActiveRoute('/workouts')" (click)="redirectsTo('/workouts')" class="nav-item">
+          <mat-icon class="nav-icon">fitness_center</mat-icon>
+          <span class="nav-text">Workouts</span>
+        </a>
+        <a mat-list-item [class.active]="isActiveRoute('/progress')" (click)="redirectsTo('/progress')" class="nav-item">
+          <mat-icon class="nav-icon">bar_chart</mat-icon>
+          <span class="nav-text">Progress</span>
+        </a>
+        <a mat-list-item [class.active]="isActiveRoute('/profile')" (click)="redirectsTo('/profile')" class="nav-item">
+          <mat-icon class="nav-icon">person</mat-icon>
+          <span class="nav-text">My Profile</span>
+        </a>
+        <a mat-list-item (click)="logout()" class="nav-item">
+          <mat-icon class="nav-icon">logout</mat-icon>
+          <span class="nav-text">Logout</span>
+        </a>
+      </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content class="drawer-content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+} @else {
+  <div class="login-container">
+    <router-outlet></router-outlet>
+  </div>
+}

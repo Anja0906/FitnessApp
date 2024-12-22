@@ -1,0 +1,98 @@
+.user-profile {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #424769;
+  color: #ffffff;
+  border: 1px solid #676f9d;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: 'Raleway', sans-serif;
+  height: auto;
+  overflow-y: auto;
+}
+
+.user-profile h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #f9b17a;
+}
+
+.user-profile p {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #ffffff;
+}
+
+.user-profile p strong {
+  color: #f9b17a;
+}
+
+.user-profile p:last-child {
+  margin-top: 20px;
+  font-style: italic;
+  color: #ffffff;
+}
+
+.user-profile ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+}
+
+.user-profile ul li {
+  background-color: #2d3250;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #676f9d;
+  color: #ffffff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.user-profile ul li:hover {
+  background-color: #676f9d;
+  color: #f9b17a;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .user-profile {
+      max-width: 90%; 
+      padding: 15px;
+  }
+
+  .user-profile h2 {
+      font-size: 1.5em;
+  }
+
+  .user-profile p {
+      font-size: 1em;
+  }
+
+  .user-profile ul li {
+      padding: 8px;
+      font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .user-profile {
+      max-width: 100%; 
+      padding: 10px;
+  }
+
+  .user-profile h2 {
+      font-size: 1.3em;
+  }
+
+  .user-profile p {
+      font-size: 0.9em;
+  }
+
+  .user-profile ul li {
+      padding: 6px;
+      font-size: 0.85em;
+  }
+}

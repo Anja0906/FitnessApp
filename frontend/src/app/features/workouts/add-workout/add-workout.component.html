@@ -1,0 +1,59 @@
+<div class="example-container">
+  <mat-form-field>
+    <mat-label>Izaberite tipove vežbi</mat-label>
+    <mat-select [formControl]="exerciseTypeId">
+      <mat-option *ngFor="let type of exerciseTypesList" [value]="type.id">
+        {{ type.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="exerciseTypeId.hasError('required')">Izaberite barem jedan tip vežbi</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Trajanje (min)</mat-label>
+    <input matInput type="number" [formControl]="duration" placeholder="Trajanje" />
+    <mat-error *ngIf="duration.hasError('min')">Trajanje mora biti veće od 0</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Kalorije</mat-label>
+    <input matInput type="number" [formControl]="caloriesBurned" placeholder="Kalorije" />
+    <mat-error *ngIf="caloriesBurned.hasError('min')">Kalorije moraju biti veće od 0</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Intenzitet (1-10)</mat-label>
+    <input matInput type="number" [formControl]="intensity" placeholder="Intenzitet" />
+    <mat-error
+      *ngIf="intensity.hasError('min') || intensity.hasError('max')"
+    >
+      Intenzitet mora biti između 1 i 10
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nivo umora (1-10)</mat-label>
+    <input matInput type="number" [formControl]="fatigueLevel" placeholder="Nivo umora" />
+    <mat-error
+      *ngIf="fatigueLevel.hasError('min') || fatigueLevel.hasError('max')"
+    >
+      Nivo umora mora biti između 1 i 10
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Napomene</mat-label>
+    <textarea matInput [formControl]="notes" placeholder="Napomene"></textarea>
+  </mat-form-field>
+
+  <div class="example-button-row">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!isFormValid()"
+      (click)="submitForm()"
+    >
+      Dodaj Trening
+    </button>
+  </div>
+</div>
