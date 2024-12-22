@@ -1,0 +1,35 @@
+<button class="add-workout-button" (click)="toggleAddWorkout()">
+  <mat-icon>add</mat-icon> Add Workout
+</button>
+<div class="container">
+  
+  <div class="workout-list">
+    @for (workout of paginatedWorkouts; track workout.id) {
+      <div class="workout-card" (click)="selectWorkout(workout)">
+        <p>{{ workout.exerciseType.name }}</p>
+        <p>Date: {{ workout.dateTime | date: 'dd.MM.yyyy HH:mm' }}</p>
+      </div>
+    } @empty {
+      <p>No workouts found</p>
+    }
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage * itemsPerPage >= workouts.length">Next</button>
+    </div>
+  </div>
+
+  <div class="details-panel">
+    <ng-container *ngIf="showAddWorkout; else detailPanel">
+      <app-add-workout (workoutAdded)="onWorkoutAdded($event)"></app-add-workout>
+    </ng-container>
+    <ng-template #detailPanel>
+      <ng-container *ngIf="selectedWorkout; else emptyPanel">
+        <app-workout-detail [workout]="selectedWorkout"></app-workout-detail>
+      </ng-container>
+      <ng-template #emptyPanel>
+        <p>Select a workout to see details</p>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

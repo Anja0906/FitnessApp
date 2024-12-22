@@ -1,0 +1,123 @@
+.registration-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #2d3250;
+  color: #ffffff;
+  font-family: 'Raleway', sans-serif;
+  padding: 20px;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-header h1 {
+  margin-top: 10px;
+  font-size: 2rem;
+  color: #f9b17a;
+  margin-bottom: 10px;
+}
+
+.form-header p {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.registration-card {
+  background-color: #424769;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  max-width: 30vw;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+mat-label {
+  color: #f9b17a !important;
+}
+
+mat-input-element {
+  color: #ffffff;
+}
+
+mat-error {
+  color: #ef5350;
+}
+
+button[mat-raised-button] {
+  background-color: #f9b17a;
+  color: #2d3250;
+  font-weight: bold;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #d48b5a;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .registration-card {
+    padding: 20px;
+    max-width: 350px;
+  }
+
+  .form-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .form-header p {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .registration-container {
+    padding: 10px;
+  }
+
+  .registration-card {
+    padding: 15px;
+    max-width: 300px;
+  }
+
+  .form-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .form-header p {
+    font-size: 0.8rem;
+  }
+
+  button[mat-raised-button] {
+    font-size: 0.9rem;
+  }
+}
+
+.register-link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #f9b17a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

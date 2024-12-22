@@ -1,0 +1,55 @@
+<div class="registration-container">
+    <div class="form-header">
+      <h1>Register</h1>
+      <p>Create your account to get started</p>
+    </div>
+    <mat-card class="registration-card">
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" required>
+          <mat-error *ngIf="registrationForm.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required email>
+          <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+            Invalid email address
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="hashedPassword" type="password" required>
+          <mat-error *ngIf="registrationForm.get('hashedPassword')?.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registrationForm.valid">
+          Register
+        </button>
+      </form>
+      <p class="register-link">
+        Already have account? 
+        <a (click)="redirectToLogin()">Login here</a>
+      </p>
+    </mat-card>
+  </div>
+  
