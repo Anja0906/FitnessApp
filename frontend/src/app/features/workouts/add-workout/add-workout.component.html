@@ -6,43 +6,55 @@
         {{ type.name }}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="exerciseTypeId.hasError('required')">Izaberite barem jedan tip vežbi</mat-error>
+    <mat-error *ngIf="exerciseTypeId.hasError('required')">Select exercise type</mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Trajanje (min)</mat-label>
+    <mat-label>Duration (min)</mat-label>
     <input matInput type="number" [formControl]="duration" placeholder="Trajanje" />
-    <mat-error *ngIf="duration.hasError('min')">Trajanje mora biti veće od 0</mat-error>
+    <mat-error *ngIf="duration.hasError('min')">Duration must be greater tha 0</mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Kalorije</mat-label>
+    <mat-label>Calories</mat-label>
     <input matInput type="number" [formControl]="caloriesBurned" placeholder="Kalorije" />
-    <mat-error *ngIf="caloriesBurned.hasError('min')">Kalorije moraju biti veće od 0</mat-error>
+    <mat-error *ngIf="caloriesBurned.hasError('min')">Calories must be greater than 0</mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Intenzitet (1-10)</mat-label>
+    <mat-label>Intensity (1-10)</mat-label>
     <input matInput type="number" [formControl]="intensity" placeholder="Intenzitet" />
     <mat-error
       *ngIf="intensity.hasError('min') || intensity.hasError('max')"
     >
-      Intenzitet mora biti između 1 i 10
+      Intensity must be between 1 and 10
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Nivo umora (1-10)</mat-label>
+    <mat-label>Fatigue level (1-10)</mat-label>
     <input matInput type="number" [formControl]="fatigueLevel" placeholder="Nivo umora" />
     <mat-error
       *ngIf="fatigueLevel.hasError('min') || fatigueLevel.hasError('max')"
     >
-      Nivo umora mora biti između 1 i 10
+    Fatigue level must be between 1 and 10
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Napomene</mat-label>
+    <mat-label>Date and time</mat-label>
+    <input
+      matInput
+      type="datetime-local"
+      [formControl]="dateTime"
+      required
+    />
+    <mat-error *ngIf="dateTime.hasError('required')">Date and time input</mat-error>
+  </mat-form-field>
+  
+
+  <mat-form-field>
+    <mat-label>Notes</mat-label>
     <textarea matInput [formControl]="notes" placeholder="Napomene"></textarea>
   </mat-form-field>
 
@@ -53,7 +65,7 @@
       [disabled]="!isFormValid()"
       (click)="submitForm()"
     >
-      Dodaj Trening
+      Add workout
     </button>
   </div>
 </div>

@@ -32,6 +32,7 @@ export class AddWorkoutComponent implements OnInit {
   caloriesBurned = new FormControl(0, [Validators.required, Validators.min(1)]);
   intensity = new FormControl(0, [Validators.required, Validators.min(1), Validators.max(10)]);
   fatigueLevel = new FormControl(0, [Validators.required, Validators.min(0), Validators.max(10)]);
+  dateTime = new FormControl(new Date(), Validators.required);
   notes = new FormControl('');
   userId!: number;
 
@@ -77,11 +78,11 @@ export class AddWorkoutComponent implements OnInit {
         fatigueLevel: this.fatigueLevel.value || 0,
         notes: this.notes.value || '',
         userId: this.userId,
-        dateTime: new Date(),
+        dateTime: this.dateTime.value ? new Date(this.dateTime.value).toISOString() : new Date().toISOString(),
+
       };
       this.workoutService.addWorkout(workout).subscribe((addedWorkout) => {
-        console.log('Workout added successfully');
-        this.workoutAdded.emit(addedWorkout); // Emituj novi trening
+        this.workoutAdded.emit(addedWorkout); 
         this.resetForm();
       });
     }
@@ -94,5 +95,6 @@ export class AddWorkoutComponent implements OnInit {
     this.intensity.reset(0);
     this.fatigueLevel.reset(0);
     this.notes.reset('');
+    this.dateTime.reset(new Date());
   }
 }

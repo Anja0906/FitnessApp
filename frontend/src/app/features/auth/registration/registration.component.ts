@@ -33,10 +33,8 @@ export class RegistrationComponent {
   onSubmit(): void {
     if (this.registrationForm.valid) {
       const userRequestDto = this.registrationForm.value;
-      console.log('Registration data:', userRequestDto);
       this.authService.register(userRequestDto).subscribe({
         next: () => {
-          console.log('Registration successful');
           this.router.navigate(['/login'])
         },
         error: (err) => {

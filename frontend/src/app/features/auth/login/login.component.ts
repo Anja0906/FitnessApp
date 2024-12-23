@@ -31,15 +31,11 @@ export class LoginComponent {
   submit() {
     if (this.loginForm.valid) {
       const loginData = this.loginForm.value;
-      console.log('Login data:', loginData);
-  
       this.authService.login(loginData).subscribe({
         next: (response) => {
-          console.log('Login successful, token:', response.token);
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          console.error('Login failed', err);
           this.requestFail = true;
         },
       });

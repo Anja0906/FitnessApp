@@ -47,7 +47,6 @@ export class AuthService {
 
   getToken(): string | null {
     const token = localStorage.getItem(this.tokenKey);
-    console.log('Fetched token from localStorage:', token);
     return token;
   }
 

@@ -54,6 +54,11 @@ namespace FitnessApp.Infrastructure.Repositories
             {
                 throw new EmptyFieldException("Exercise type id field can not be empty!");
             }
+
+            if (workout.DateTime.Kind != DateTimeKind.Utc)
+            {
+                workout.DateTime = workout.DateTime.ToUniversalTime();
+            }
             _context.Workouts.Add(workout);
             await _context.SaveChangesAsync();
             return workout;

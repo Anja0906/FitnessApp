@@ -21,6 +21,6 @@ export interface WorkoutRequestDto {
     intensity: number;
     fatigueLevel: number;
     notes?: string;
-    dateTime: Date;
+    dateTime: string;
 }
 

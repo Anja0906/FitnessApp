@@ -72,6 +72,7 @@ describe('AddWorkoutComponent', () => {
     component.intensity.setValue(5);
     component.fatigueLevel.setValue(3);
     component.exerciseTypeId.setValue(1);
+    component.dateTime.setValue(new Date());
 
     expect(component.isFormValid()).toBeTrue();
   });
@@ -84,6 +85,7 @@ describe('AddWorkoutComponent', () => {
     component.intensity.setValue(5);
     component.fatigueLevel.setValue(3);
     component.exerciseTypeId.setValue(1);
+    component.dateTime.setValue(new Date());
     component.submitForm();
 
     expect(mockWorkoutService.addWorkout).toHaveBeenCalled();
@@ -97,6 +99,7 @@ describe('AddWorkoutComponent', () => {
     component.intensity.setValue(5);
     component.fatigueLevel.setValue(3);
     component.exerciseTypeId.setValue(1);
+    component.dateTime.setValue(new Date());
     component.submitForm();
 
     expect(component.duration.value).toBe(0);
