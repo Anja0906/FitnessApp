@@ -1,0 +1,15 @@
+<div class="workout-detail" *ngIf="workout">
+  <h2>{{ workout.exerciseType.name }}</h2>
+  <div class="workout-info">
+    <p><strong>Duration:</strong> {{ workout.duration }} min</p>
+    <p><strong>Calories:</strong> {{ workout.caloriesBurned }}</p>
+    <p><strong>Intensity:</strong> {{ workout.intensity }}</p>
+    <p><strong>Fatigue:</strong> {{ workout.fatigueLevel }}</p>
+    <p><strong>Date:</strong> {{ workout.dateTime | date: 'dd.MM.yyyy HH:mm:ss' }}</p>
+
+  </div>
+  <div class="workout-notes">
+    <p><em>Notes:</em> {{ workout.notes }}</p>
+  </div>
+</div>
+<p *ngIf="!workout">No workout details available.</p>

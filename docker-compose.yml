@@ -1,0 +1,45 @@
+version: '3.4'
+
+volumes:
+  postgres_data:
+services:
+  fitnessapp:
+    build:
+      context: .
+      dockerfile: ./FitnessApp/Dockerfile
+    container_name: fitnessapp
+    ports:
+      - "32768:8080"
+    depends_on:
+      - postgres
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=fitnessdb;Username=postgres;Password=postgres"
+      
+  angular-app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: angular-app
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./frontend:/angular-app
+      - /angular-app/node_modules/
+    environment:
+      NODE_ENV: development
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fitnessdb
+    volumes:    
+      - postgres_data:/var/lib/postgresql/data
+
+
